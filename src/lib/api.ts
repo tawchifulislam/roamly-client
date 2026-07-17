@@ -38,3 +38,18 @@ export async function deleteTrip(id: string) {
 
   return res.json();
 }
+
+export async function getAllTrips(params: Record<string, string>) {
+  const query = new URLSearchParams(params).toString();
+  const res = await fetch(`${SERVER_URL}/api/trips?${query}`);
+
+  if (!res.ok) throw new Error('Failed to fetch trips');
+  return res.json();
+}
+
+export async function getTripById(id: string) {
+  const res = await fetch(`${SERVER_URL}/api/trips/${id}`);
+
+  if (!res.ok) throw new Error('Failed to fetch trip');
+  return res.json();
+}
