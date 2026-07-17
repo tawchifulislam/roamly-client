@@ -53,3 +53,10 @@ export async function getTripById(id: string) {
   if (!res.ok) throw new Error('Failed to fetch trip');
   return res.json();
 }
+
+export async function getFeaturedTrips() {
+  const res = await fetch(`${SERVER_URL}/api/trips?sort=rating&limit=4`);
+
+  if (!res.ok) throw new Error('Failed to fetch featured trips');
+  return res.json();
+}

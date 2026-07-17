@@ -1,15 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { getAllTrips } from '@/lib/api';
 import { Trip } from '@/types/trip';
 import TripCard from '@/components/TripCard';
 import TripCardSkeleton from '@/components/TripCardSkeleton';
 
 export default function ExplorePage() {
+  const searchParams = useSearchParams();
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchParams.get('location') || '');
   const [type, setType] = useState('');
   const [sort, setSort] = useState('');
   const [page, setPage] = useState(1);
