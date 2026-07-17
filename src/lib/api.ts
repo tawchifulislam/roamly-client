@@ -60,3 +60,18 @@ export async function getFeaturedTrips() {
   if (!res.ok) throw new Error('Failed to fetch featured trips');
   return res.json();
 }
+
+export async function getRecommendations(
+  interests: string[],
+  budgetRange: string,
+) {
+  const res = await fetch(`${SERVER_URL}/api/recommendations`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ interests, budgetRange }),
+  });
+
+  if (!res.ok) throw new Error('Failed to get recommendations');
+  return res.json();
+}

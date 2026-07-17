@@ -9,7 +9,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
       className="block border rounded-xl overflow-hidden hover:shadow-md transition-shadow"
     >
       <div className="relative h-40 w-full bg-gray-100">
-        {trip.images[0] && (
+        {trip.images && trip.images.length > 0 && (
           <Image
             src={trip.images[0]}
             alt={trip.title}

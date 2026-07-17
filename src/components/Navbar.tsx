@@ -24,6 +24,7 @@ export default function Navbar() {
 
           {isPending ? null : session ? (
             <>
+              <Link href="/recommendations">AI Recommendations</Link>
               <Link href="/trips/add">Add Trip</Link>
               <Link href="/trips/manage">Manage Trips</Link>
               <span className="text-sm text-gray-500">{session.user.name}</span>
