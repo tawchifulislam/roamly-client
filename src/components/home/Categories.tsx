@@ -19,7 +19,7 @@ const categories = [
 
 export default function Categories() {
   return (
-    <section className="bg-gray-50 py-16 sm:py-20">
+    <section className="py-16 sm:py-20 bg-gray-50">
       <Container>
         <div className="text-center mb-10">
           <h2 className="font-heading text-2xl sm:text-3xl font-bold text-gray-900">

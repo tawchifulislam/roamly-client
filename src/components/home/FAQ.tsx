@@ -27,7 +27,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className="py-16 sm:py-20 bg-white">
       <Container>
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">
