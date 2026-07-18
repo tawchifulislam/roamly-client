@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { useSession, signOut } from '@/lib/auth-client';
-import Logo from './Logo';
+import Logo from '@/components/Logo';
+import Container from '@/components/Container';
 
 export default function Navbar() {
   const { data: session, isPending } = useSession();
@@ -14,34 +15,66 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
+      <Container className="flex items-center justify-between py-4">
         <Logo />
 
-        <div className="flex items-center gap-4">
-          <Link href="/explore">Explore</Link>
-          <Link href="/about">About</Link>
+        <div className="flex items-center gap-5 text-sm">
+          <Link
+            href="/explore"
+            className="hover:text-teal-700 transition-colors"
+          >
+            Explore
+          </Link>
+          <Link href="/about" className="hover:text-teal-700 transition-colors">
+            About
+          </Link>
 
           {isPending ? null : session ? (
             <>
-              <Link href="/recommendations">AI Recommendations</Link>
-              <Link href="/trips/add">Add Trip</Link>
-              <Link href="/trips/manage">Manage Trips</Link>
-              <span className="text-sm text-gray-500">{session.user.name}</span>
+              <Link
+                href="/recommendations"
+                className="hover:text-teal-700 transition-colors"
+              >
+                AI Recommendations
+              </Link>
+              <Link
+                href="/trips/add"
+                className="hover:text-teal-700 transition-colors"
+              >
+                Add Trip
+              </Link>
+              <Link
+                href="/trips/manage"
+                className="hover:text-teal-700 transition-colors"
+              >
+                Manage Trips
+              </Link>
+              <span className="text-gray-500">{session.user.name}</span>
               <button
                 onClick={handleLogout}
-                className="rounded bg-black px-3 py-1 text-white"
+                className="rounded-lg bg-teal-700 hover:bg-teal-800 px-3 py-1.5 text-white transition-colors"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link href="/login">Login</Link>
-              <Link href="/signup">Sign Up</Link>
+              <Link
+                href="/login"
+                className="hover:text-teal-700 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-lg bg-teal-700 hover:bg-teal-800 px-3 py-1.5 text-white transition-colors"
+              >
+                Sign Up
+              </Link>
             </>
           )}
         </div>
-      </div>
+      </Container>
     </nav>
   );
 }

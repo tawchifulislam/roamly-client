@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import Logo from '@/components/Logo';
+import Container from '@/components/Container';
 import { FacebookIcon, InstagramIcon, XIcon } from '@/components/SocialIcons';
 
 const exploreLinks = [
@@ -27,7 +28,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
-      <div className="mx-auto max-w-6xl px-6 pt-16 pb-10">
+      <Container className="pt-16 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="lg:col-span-2 space-y-4">
             <Logo variant="light" />
@@ -122,7 +123,7 @@ export default function Footer() {
             Powered by AI-driven trip planning
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
