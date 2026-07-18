@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ChatWidget from '@/components/ChatWidget';
 import './globals.css';
 
 const jakarta = Plus_Jakarta_Sans({
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />
+        <ChatWidget />
       </body>
     </html>
   );

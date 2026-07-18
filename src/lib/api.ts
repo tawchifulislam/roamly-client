@@ -75,3 +75,18 @@ export async function getRecommendations(
   if (!res.ok) throw new Error('Failed to get recommendations');
   return res.json();
 }
+
+export async function sendChatMessage(
+  message: string,
+  conversationId?: string,
+) {
+  const res = await fetch(`${SERVER_URL}/api/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ message, conversationId }),
+  });
+
+  if (!res.ok) throw new Error('Failed to get chat response');
+  return res.json();
+}
