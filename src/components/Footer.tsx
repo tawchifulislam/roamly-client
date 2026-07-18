@@ -1,108 +1,127 @@
 import Link from 'next/link';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import Logo from '@/components/Logo';
+import { FacebookIcon, InstagramIcon, XIcon } from '@/components/SocialIcons';
+
+const exploreLinks = [
+  { label: 'All Trips', href: '/explore' },
+  { label: 'Trip Packages', href: '/explore?type=package' },
+  { label: 'Destinations', href: '/explore?type=destination' },
+  { label: 'AI Recommendations', href: '/recommendations' },
+];
+
+const companyLinks = [
+  { label: 'About Us', href: '/about' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Terms & Conditions', href: '/terms' },
+];
+
+const socialLinks = [
+  { Icon: FacebookIcon, href: 'https://facebook.com', label: 'Facebook' },
+  { Icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram' },
+  { Icon: XIcon, href: 'https://twitter.com', label: 'X' },
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-14 pb-8">
-      <div className="mx-auto max-w-6xl px-6 grid grid-cols-1 sm:grid-cols-4 gap-10">
-        <div>
-          <h3 className="font-heading text-xl font-bold text-white mb-3">
-            Roamly
-          </h3>
-          <p className="text-sm text-gray-400">
-            Discover curated trip packages and hidden destinations, planned
-            smarter with AI.
-          </p>
-        </div>
+    <footer className="bg-gray-900 text-gray-300">
+      <div className="mx-auto max-w-6xl px-6 pt-16 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+          <div className="lg:col-span-2 space-y-4">
+            <Logo variant="light" />
+            <p className="text-sm text-gray-400 max-w-xs leading-relaxed">
+              Discover curated trip packages and hidden destinations, planned
+              smarter with AI. Your next journey starts here.
+            </p>
+            <div className="flex gap-3 pt-1">
+              {socialLinks.map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 text-gray-300 hover:bg-teal-700 hover:text-white transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
 
-        <div>
-          <h4 className="font-medium text-white mb-3">Explore</h4>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="/explore" className="hover:text-white">
-                All Trips
-              </Link>
-            </li>
-            <li>
-              <Link href="/explore?type=package" className="hover:text-white">
-                Trip Packages
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/explore?type=destination"
-                className="hover:text-white"
-              >
-                Destinations
-              </Link>
-            </li>
-          </ul>
-        </div>
+          <div>
+            <h4 className="font-heading font-semibold text-white mb-4 text-sm tracking-wide">
+              Explore
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {exploreLinks.map(link => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="hover:text-orange-400 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div>
-          <h4 className="font-medium text-white mb-3">Company</h4>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="/about" className="hover:text-white">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:text-white">
-                Blog
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-white">
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy" className="hover:text-white">
-                Privacy Policy
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms" className="hover:text-white">
-                Terms & Conditions
-              </Link>
-            </li>
-          </ul>
-        </div>
+          <div>
+            <h4 className="font-heading font-semibold text-white mb-4 text-sm tracking-wide">
+              Company
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {companyLinks.map(link => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="hover:text-orange-400 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div>
-          <h4 className="font-medium text-white mb-3">Contact</h4>
-          <ul className="space-y-2 text-sm text-gray-400">
-            <li>Chattogram, Bangladesh</li>
-            <li>
-              <a href="mailto:support@roamly.com" className="hover:text-white">
-                support@roamly.com
-              </a>
-            </li>
-            <li>+880 1XXX-XXXXXX</li>
-          </ul>
-          <div className="flex gap-4 mt-4 text-sm">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white"
-            >
-              Facebook
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white"
-            >
-              Instagram
-            </a>
+          <div>
+            <h4 className="font-heading font-semibold text-white mb-4 text-sm tracking-wide">
+              Contact
+            </h4>
+            <ul className="space-y-3 text-sm text-gray-400">
+              <li className="flex items-start gap-2">
+                <MapPin size={16} className="mt-0.5 text-teal-500 shrink-0" />
+                Chattogram, Bangladesh
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail size={16} className="text-teal-500 shrink-0" />
+                <a
+                  href="mailto:support@roamly.com"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  support@roamly.com
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone size={16} className="text-teal-500 shrink-0" />
+                +880 1XXX-XXXXXX
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      <div className="mx-auto max-w-6xl px-6 mt-10 pt-6 border-t border-gray-800 text-xs text-gray-500 text-center">
-        © {new Date().getFullYear()} Roamly. All rights reserved.
+        <div className="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-gray-500">
+            © {new Date().getFullYear()} Roamly. All rights reserved.
+          </p>
+          <div className="flex items-center gap-1.5 text-xs text-gray-500">
+            <Send size={12} className="text-teal-500" />
+            Powered by AI-driven trip planning
+          </div>
+        </div>
       </div>
     </footer>
   );
