@@ -12,6 +12,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
               src={trip.images[0]}
               alt={trip.title}
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               className="object-cover"
             />
           )}

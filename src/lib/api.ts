@@ -90,3 +90,14 @@ export async function sendChatMessage(
   if (!res.ok) throw new Error('Failed to get chat response');
   return res.json();
 }
+
+export async function getRelatedTrips(location: string, excludeId: string) {
+  const params = new URLSearchParams({ location, limit: '4' });
+  const res = await fetch(`${SERVER_URL}/api/trips?${params}`);
+
+  if (!res.ok) throw new Error('Failed to fetch related trips');
+  const data = await res.json();
+
+  // Filter out the current trip from the related list
+  return data.trips.filter((t: { _id: string }) => t._id !== excludeId);
+}

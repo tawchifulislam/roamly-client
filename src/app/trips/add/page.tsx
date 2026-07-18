@@ -15,7 +15,7 @@ export default function AddTripPage() {
     price: '',
     duration: '',
     bestTimeToVisit: '',
-    imageUrl: '',
+    imageUrls: '',
     tags: '',
   });
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,10 @@ export default function AddTripPage() {
         location: form.location,
         shortDescription: form.shortDescription,
         fullDescription: form.fullDescription,
-        images: form.imageUrl ? [form.imageUrl] : [],
+        images: form.imageUrls
+          .split(',')
+          .map(url => url.trim())
+          .filter(Boolean),
         tags: form.tags
           .split(',')
           .map(t => t.trim())
@@ -114,9 +117,9 @@ export default function AddTripPage() {
         rows={4}
       />
       <input
-        name="imageUrl"
-        placeholder="Image URL"
-        value={form.imageUrl}
+        name="imageUrls"
+        placeholder="Image URLs (comma separated for multiple)"
+        value={form.imageUrls}
         onChange={handleChange}
         className="w-full border rounded p-2"
       />

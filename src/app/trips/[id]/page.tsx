@@ -3,12 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { getTripById } from '@/lib/api';
+import { getTripById, getRelatedTrips } from '@/lib/api';
 import { Trip } from '@/types/trip';
+import TripCard from '@/components/TripCard';
 
 export default function TripDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [trip, setTrip] = useState<Trip | null>(null);
+  const [relatedTrips, setRelatedTrips] = useState<Trip[]>([]);
+  const [activeImage, setActiveImage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -17,6 +20,9 @@ export default function TripDetailsPage() {
       try {
         const data = await getTripById(id);
         setTrip(data);
+
+        const related = await getRelatedTrips(data.location, data._id);
+        setRelatedTrips(related);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load trip');
       } finally {
@@ -32,16 +38,46 @@ export default function TripDetailsPage() {
   if (error || !trip)
     return <div className="p-6 text-center text-red-500">Trip not found.</div>;
 
+  const hasMultipleImages = trip.images && trip.images.length > 1;
+
   return (
     <div className="mx-auto max-w-4xl p-6 space-y-8">
-      <div className="relative h-72 w-full rounded-xl overflow-hidden bg-gray-100">
-        {trip.images[0] && (
-          <Image
-            src={trip.images[0]}
-            alt={trip.title}
-            fill
-            className="object-cover"
-          />
+      <div className="space-y-2">
+        <div className="relative h-72 w-full rounded-xl overflow-hidden bg-gray-100">
+          {trip.images?.[activeImage] && (
+            <Image
+              src={trip.images[activeImage]}
+              alt={trip.title}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover"
+            />
+          )}
+        </div>
+
+        {hasMultipleImages && (
+          <div className="flex gap-2">
+            {trip.images.map((img, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveImage(index)}
+                className={`relative h-16 w-24 rounded-lg overflow-hidden border-2 ${
+                  activeImage === index
+                    ? 'border-teal-700'
+                    : 'border-transparent'
+                }`}
+              >
+                <Image
+                  src={img}
+                  alt={`${trip.title} ${index + 1}`}
+                  fill
+                  sizes="96px"
+                  className="object-cover"
+                />
+              </button>
+            ))}
+          </div>
         )}
       </div>
 
@@ -84,6 +120,19 @@ export default function TripDetailsPage() {
           ))}
         </div>
       </section>
+
+      {relatedTrips.length > 0 && (
+        <section>
+          <h2 className="font-heading text-xl font-semibold mb-4">
+            More Trips in {trip.location}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {relatedTrips.map(related => (
+              <TripCard key={related._id} trip={related} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
