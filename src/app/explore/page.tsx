@@ -12,7 +12,9 @@ export default function ExplorePage() {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(searchParams.get('location') || '');
-  const [type, setType] = useState('');
+  const [type, setType] = useState(searchParams.get('type') || '');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const [sort, setSort] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -27,6 +29,8 @@ export default function ExplorePage() {
         };
         if (search) params.location = search;
         if (type) params.type = type;
+        if (minPrice) params.minPrice = minPrice;
+        if (maxPrice) params.maxPrice = maxPrice;
         if (sort) params.sort = sort;
 
         const data = await getAllTrips(params);
@@ -40,7 +44,9 @@ export default function ExplorePage() {
     };
 
     fetchTrips();
-  }, [search, type, sort, page]);
+  }, [search, type, minPrice, maxPrice, sort, page]);
+
+  const resetPage = () => setPage(1);
 
   return (
     <div className="mx-auto max-w-6xl p-6">
@@ -52,7 +58,7 @@ export default function ExplorePage() {
           value={search}
           onChange={e => {
             setSearch(e.target.value);
-            setPage(1);
+            resetPage();
           }}
           className="border rounded p-2 flex-1 min-w-50"
         />
@@ -61,7 +67,7 @@ export default function ExplorePage() {
           value={type}
           onChange={e => {
             setType(e.target.value);
-            setPage(1);
+            resetPage();
           }}
           className="border rounded p-2"
         >
@@ -70,11 +76,32 @@ export default function ExplorePage() {
           <option value="destination">Destination</option>
         </select>
 
+        <input
+          type="number"
+          placeholder="Min Price"
+          value={minPrice}
+          onChange={e => {
+            setMinPrice(e.target.value);
+            resetPage();
+          }}
+          className="border rounded p-2 w-28"
+        />
+        <input
+          type="number"
+          placeholder="Max Price"
+          value={maxPrice}
+          onChange={e => {
+            setMaxPrice(e.target.value);
+            resetPage();
+          }}
+          className="border rounded p-2 w-28"
+        />
+
         <select
           value={sort}
           onChange={e => {
             setSort(e.target.value);
-            setPage(1);
+            resetPage();
           }}
           className="border rounded p-2"
         >
