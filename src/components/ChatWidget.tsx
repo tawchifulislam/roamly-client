@@ -5,7 +5,7 @@ import { sendChatMessage } from '@/lib/api';
 import { ChatMessage } from '@/types/chat';
 import { useSession } from '@/lib/auth-client';
 
-const suggestedPrompts = [
+const initialPrompts = [
   'Suggest a beach trip',
   "What's the cheapest package?",
   'Plan a 3-day trip for me',
@@ -41,7 +41,7 @@ export default function ChatWidget() {
       setConversationId(data.conversationId);
       setMessages(prev => [
         ...prev,
-        { role: 'assistant', content: data.reply },
+        { role: 'assistant', content: data.reply, followUps: data.followUps },
       ]);
     } catch {
       setMessages(prev => [
@@ -60,7 +60,12 @@ export default function ChatWidget() {
     if (e.key === 'Enter') handleSend();
   };
 
-  // Only show chat to logged-in users
+  const lastMessage = messages[messages.length - 1];
+  const showFollowUps =
+    !isTyping &&
+    lastMessage?.role === 'assistant' &&
+    (lastMessage.followUps?.length ?? 0) > 0;
+
   if (!session) return null;
 
   return (
@@ -83,7 +88,7 @@ export default function ChatWidget() {
                 <p className="text-xs text-gray-400 text-center">
                   Ask me anything about planning your trip
                 </p>
-                {suggestedPrompts.map(prompt => (
+                {initialPrompts.map(prompt => (
                   <button
                     key={prompt}
                     onClick={() => handleSend(prompt)}
@@ -111,6 +116,20 @@ export default function ChatWidget() {
                 </div>
               </div>
             ))}
+
+            {showFollowUps && (
+              <div className="flex flex-col gap-1.5 pt-1">
+                {lastMessage.followUps!.map(followUp => (
+                  <button
+                    key={followUp}
+                    onClick={() => handleSend(followUp)}
+                    className="self-start text-xs border border-teal-200 text-teal-700 rounded-full px-3 py-1.5 hover:bg-teal-50"
+                  >
+                    {followUp}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {isTyping && (
               <div className="flex justify-start">
