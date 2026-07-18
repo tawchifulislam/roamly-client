@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { Plus, Minus, HelpCircle } from 'lucide-react';
+import Container from '@/components/Container';
 
 const faqs = [
   {
@@ -25,26 +27,52 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="mx-auto max-w-3xl px-6 py-16">
-      <h2 className="font-heading text-2xl font-bold mb-8 text-center">
-        Frequently Asked Questions
-      </h2>
-      <div className="space-y-3">
-        {faqs.map((item, index) => (
-          <div key={item.q} className="border rounded-lg">
-            <button
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              className="w-full text-left px-4 py-3 flex justify-between items-center font-medium"
-            >
-              {item.q}
-              <span>{openIndex === index ? '−' : '+'}</span>
-            </button>
-            {openIndex === index && (
-              <p className="px-4 pb-3 text-sm text-gray-500">{item.a}</p>
-            )}
+    <section className="py-16 sm:py-20">
+      <Container>
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mx-auto mb-4">
+              <HelpCircle size={22} className="text-teal-700" />
+            </span>
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-gray-900">
+              Frequently Asked Questions
+            </h2>
           </div>
-        ))}
-      </div>
+
+          <div className="space-y-3">
+            {faqs.map((item, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div
+                  key={item.q}
+                  className="border border-gray-200 rounded-xl overflow-hidden"
+                >
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="w-full text-left px-5 py-4 flex justify-between items-center gap-4"
+                  >
+                    <span className="font-medium text-sm text-gray-900">
+                      {item.q}
+                    </span>
+                    <span className="w-7 h-7 rounded-full bg-gray-50 flex items-center justify-center shrink-0">
+                      {isOpen ? (
+                        <Minus size={14} className="text-teal-700" />
+                      ) : (
+                        <Plus size={14} className="text-teal-700" />
+                      )}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <p className="px-5 pb-4 text-sm text-gray-500 leading-relaxed">
+                      {item.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Container>
     </section>
   );
 }
