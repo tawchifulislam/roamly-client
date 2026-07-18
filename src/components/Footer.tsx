@@ -29,8 +29,8 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
       <Container className="pt-16 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
-          <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-10">
+          <div className="col-span-2 space-y-4">
             <Logo variant="light" />
             <p className="text-sm text-gray-400 max-w-xs leading-relaxed">
               Discover curated trip packages and hidden destinations, planned
@@ -52,7 +52,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="col-span-1">
             <h4 className="font-heading font-semibold text-white mb-4 text-sm tracking-wide">
               Explore
             </h4>
@@ -70,7 +70,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-1">
             <h4 className="font-heading font-semibold text-white mb-4 text-sm tracking-wide">
               Company
             </h4>
@@ -88,7 +88,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h4 className="font-heading font-semibold text-white mb-4 text-sm tracking-wide">
               Contact
             </h4>
