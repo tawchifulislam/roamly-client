@@ -9,13 +9,13 @@ import Logo from '@/components/Logo';
 import Container from '@/components/Container';
 
 const loggedOutLinks = [
+  { label: 'Home', href: '/' },
   { label: 'Explore', href: '/explore' },
-  { label: 'About', href: '/about' },
 ];
 
 const loggedInLinks = [
+  { label: 'Home', href: '/' },
   { label: 'Explore', href: '/explore' },
-  { label: 'About', href: '/about' },
   { label: 'AI Recommendations', href: '/recommendations' },
   { label: 'Add Trip', href: '/trips/add' },
   { label: 'Manage Trips', href: '/trips/manage' },
