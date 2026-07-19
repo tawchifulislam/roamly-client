@@ -9,7 +9,9 @@ export async function createTrip(data: Record<string, unknown>) {
   });
 
   if (!res.ok) {
-    const err = await res.json();
+    const err = await res
+      .json()
+      .catch(() => ({ message: 'Failed to create trip' }));
     throw new Error(err.message || 'Failed to create trip');
   }
 
@@ -32,7 +34,9 @@ export async function deleteTrip(id: string) {
   });
 
   if (!res.ok) {
-    const err = await res.json();
+    const err = await res
+      .json()
+      .catch(() => ({ message: 'Failed to delete trip' }));
     throw new Error(err.message || 'Failed to delete trip');
   }
 
@@ -61,19 +65,14 @@ export async function getFeaturedTrips() {
   return res.json();
 }
 
-export async function getRecommendations(
-  interests: string[],
-  budgetRange: string,
-) {
-  const res = await fetch(`${SERVER_URL}/api/recommendations`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ interests, budgetRange }),
-  });
+export async function getRelatedTrips(location: string, excludeId: string) {
+  const params = new URLSearchParams({ location, limit: '4' });
+  const res = await fetch(`${SERVER_URL}/api/trips?${params}`);
 
-  if (!res.ok) throw new Error('Failed to get recommendations');
-  return res.json();
+  if (!res.ok) throw new Error('Failed to fetch related trips');
+  const data = await res.json();
+
+  return data.trips.filter((t: { _id: string }) => t._id !== excludeId);
 }
 
 export async function sendChatMessage(
@@ -91,13 +90,29 @@ export async function sendChatMessage(
   return res.json();
 }
 
-export async function getRelatedTrips(location: string, excludeId: string) {
-  const params = new URLSearchParams({ location, limit: '4' });
-  const res = await fetch(`${SERVER_URL}/api/trips?${params}`);
+export async function submitRating(tripId: string, value: number) {
+  const res = await fetch(`${SERVER_URL}/api/ratings`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ tripId, value }),
+  });
 
-  if (!res.ok) throw new Error('Failed to fetch related trips');
-  const data = await res.json();
+  if (!res.ok) {
+    const err = await res
+      .json()
+      .catch(() => ({ message: 'Failed to submit rating' }));
+    throw new Error(err.message || 'Failed to submit rating');
+  }
 
-  // Filter out the current trip from the related list
-  return data.trips.filter((t: { _id: string }) => t._id !== excludeId);
+  return res.json();
+}
+
+export async function getMyRatings() {
+  const res = await fetch(`${SERVER_URL}/api/ratings/mine`, {
+    credentials: 'include',
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch your ratings');
+  return res.json();
 }

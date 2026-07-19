@@ -9,6 +9,7 @@ import { getTripById, getRelatedTrips } from '@/lib/api';
 import { Trip } from '@/types/trip';
 import TripCard from '@/components/TripCard';
 import Container from '@/components/Container';
+import ContactBookingCard from '@/components/ContactBookingCard';
 
 export default function TripDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -194,10 +195,11 @@ export default function TripDetailsPage() {
 
           {/* Right — sticky sidebar (desktop) */}
           <div className="hidden lg:block">
-            <div className="sticky top-24">
+            <div className="sticky top-24 space-y-4">
               <div className="bg-white rounded-xl border border-gray-200 p-6">
                 <TitleBlock trip={trip} />
               </div>
+              <ContactBookingCard />
             </div>
           </div>
         </div>
@@ -212,6 +214,7 @@ export default function TripDetailsPage() {
               {relatedTrips.map(related => (
                 <TripCard key={related._id} trip={related} />
               ))}
+              <ContactBookingCard />
             </div>
           </div>
         )}

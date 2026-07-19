@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { createTrip } from '@/lib/api';
 import Container from '@/components/Container';
+import { toast } from 'sonner';
 
 export default function AddTripPage() {
   const router = useRouter();
@@ -65,9 +66,13 @@ export default function AddTripPage() {
       }
 
       await createTrip(payload);
+      toast.success('Trip added successfully!');
       router.push('/trips/manage');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      const message =
+        err instanceof Error ? err.message : 'Something went wrong';
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

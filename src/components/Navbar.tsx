@@ -16,7 +16,7 @@ const loggedOutLinks = [
 const loggedInLinks = [
   { label: 'Home', href: '/' },
   { label: 'Explore', href: '/explore' },
-  { label: 'AI Recommendations', href: '/recommendations' },
+  { label: 'Rate Trips', href: '/trips/rate' },
   { label: 'Add Trip', href: '/trips/add' },
   { label: 'Manage Trips', href: '/trips/manage' },
 ];
@@ -41,7 +41,6 @@ export default function Navbar() {
       <Container className="flex items-center justify-between h-16">
         <Logo />
 
-        {/* Desktop nav (lg and up) */}
         <div className="hidden lg:flex items-center gap-1">
           {links.map(link => (
             <Link
@@ -58,7 +57,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop auth actions */}
         <div className="hidden lg:flex items-center gap-3">
           {isPending ? (
             <div className="w-20 h-8" />
@@ -96,7 +94,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile / tablet toggle (below lg) */}
         <button
           onClick={() => setMobileOpen(prev => !prev)}
           className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 hover:bg-gray-50"
@@ -106,7 +103,6 @@ export default function Navbar() {
         </button>
       </Container>
 
-      {/* Mobile / tablet dropdown */}
       {mobileOpen && (
         <div className="lg:hidden border-t border-gray-200 bg-white">
           <Container className="py-4 flex flex-col gap-1">

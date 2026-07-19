@@ -13,6 +13,7 @@ import { getAllTrips } from '@/lib/api';
 import { Trip } from '@/types/trip';
 import TripCard from '@/components/TripCard';
 import TripCardSkeleton from '@/components/TripCardSkeleton';
+import ContactBookingCard from '@/components/ContactBookingCard';
 import Container from '@/components/Container';
 
 export default function ExplorePage() {
@@ -206,18 +207,21 @@ export default function ExplorePage() {
             ))}
           </div>
         ) : trips.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-gray-500">
-              No trips found. Try adjusting your filters.
-            </p>
-            {hasActiveFilters && (
-              <button
-                onClick={clearFilters}
-                className="mt-3 text-sm text-teal-700 font-medium hover:underline"
-              >
-                Clear all filters
-              </button>
-            )}
+          <div className="max-w-md mx-auto">
+            <div className="text-center mb-6">
+              <p className="text-gray-500">
+                No trips found. Try adjusting your filters.
+              </p>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="mt-3 text-sm text-teal-700 font-medium hover:underline"
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+            <ContactBookingCard />
           </div>
         ) : (
           <>

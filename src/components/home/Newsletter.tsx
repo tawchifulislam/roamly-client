@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Send, CheckCircle2 } from 'lucide-react';
 import Container from '@/components/Container';
+import { toast } from 'sonner';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ export default function Newsletter() {
     e.preventDefault();
     if (!email) return;
     setSubmitted(true);
+    toast.success('Subscribed! Watch your inbox for deals.');
   };
 
   return (

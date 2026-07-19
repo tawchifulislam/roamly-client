@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import Container from '@/components/Container';
+import { toast } from 'sonner';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -17,6 +18,7 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    toast.success("Message sent! We'll get back to you soon.");
   };
 
   return (

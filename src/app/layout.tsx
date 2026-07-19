@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -28,6 +29,7 @@ export default function RootLayout({
         <div className="flex-1">{children}</div>
         <Footer />
         <ChatWidget />
+        <Toaster position="top-center" richColors closeButton />
       </body>
     </html>
   );

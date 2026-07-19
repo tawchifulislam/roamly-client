@@ -8,7 +8,7 @@ const exploreLinks = [
   { label: 'All Trips', href: '/explore' },
   { label: 'Trip Packages', href: '/explore?type=package' },
   { label: 'Destinations', href: '/explore?type=destination' },
-  { label: 'AI Recommendations', href: '/recommendations' },
+  { label: 'Rate Trips', href: '/trips/rate' },
 ];
 
 const companyLinks = [

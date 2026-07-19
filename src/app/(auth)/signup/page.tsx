@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Mail, Lock, User, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Mail, Lock, User } from 'lucide-react';
 import { signUp, signIn } from '@/lib/auth-client';
 import Logo from '@/components/Logo';
 
 export default function SignupPage() {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,11 +24,16 @@ export default function SignupPage() {
     setLoading(false);
 
     if (error) {
-      setError(error.message || 'Something went wrong. Please try again.');
+      const message =
+        error.message || 'Something went wrong. Please try again.';
+      setError(message);
+      toast.error(message);
       return;
     }
 
-    window.location.href = '/';
+    toast.success('Account created! Welcome to Roamly.');
+    router.push('/');
+    router.refresh();
   };
 
   const handleGoogleSignup = async () => {
@@ -36,7 +44,6 @@ export default function SignupPage() {
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gray-50 p-4 sm:p-8">
       <div className="w-full max-w-4xl rounded-2xl overflow-hidden shadow-sm border border-gray-200 grid grid-cols-1 lg:grid-cols-2 bg-white">
-        {/* Left visual panel - desktop only */}
         <div className="hidden lg:flex flex-col justify-between bg-linear-to-br from-teal-700 to-teal-900 text-white p-10 relative overflow-hidden">
           <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/5" />
           <div className="absolute -right-8 bottom-12 w-36 h-36 rounded-full bg-orange-500/10" />
@@ -46,16 +53,12 @@ export default function SignupPage() {
           </div>
 
           <div className="relative z-10 space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium bg-white/10 rounded-full px-3 py-1">
-              <Sparkles size={13} />
-              Join thousands of travelers
-            </span>
             <h2 className="font-heading text-2xl font-bold leading-snug">
               Discover your next journey with Roamly.
             </h2>
             <p className="text-teal-100 text-sm max-w-sm">
-              Get AI-powered trip recommendations, save your favorite
-              destinations, and plan smarter - all in one place.
+              Save your favorite destinations and plan smarter — all in one
+              place.
             </p>
           </div>
 
@@ -64,7 +67,6 @@ export default function SignupPage() {
           </p>
         </div>
 
-        {/* Right form panel */}
         <div className="flex items-center justify-center p-6 sm:p-10">
           <div className="w-full max-w-sm">
             <div className="mb-8">

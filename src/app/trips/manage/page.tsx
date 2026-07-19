@@ -7,6 +7,7 @@ import { getMyTrips, deleteTrip } from '@/lib/api';
 import { Trip } from '@/types/trip';
 import TripTypeChart from '@/components/TripTypeChart';
 import Container from '@/components/Container';
+import { toast } from 'sonner';
 
 export default function ManageTripsPage() {
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -37,8 +38,9 @@ export default function ManageTripsPage() {
     try {
       await deleteTrip(id);
       setTrips(prev => prev.filter(trip => trip._id !== id));
+      toast.success('Trip deleted');
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to delete');
+      toast.error(err instanceof Error ? err.message : 'Failed to delete');
     } finally {
       setDeletingId(null);
     }
