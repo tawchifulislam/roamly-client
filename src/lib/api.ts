@@ -1,7 +1,5 @@
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
-
 export async function createTrip(data: Record<string, unknown>) {
-  const res = await fetch(`${SERVER_URL}/api/trips`, {
+  const res = await fetch(`/api/trips`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -19,7 +17,7 @@ export async function createTrip(data: Record<string, unknown>) {
 }
 
 export async function getMyTrips() {
-  const res = await fetch(`${SERVER_URL}/api/trips/mine`, {
+  const res = await fetch(`/api/trips/mine`, {
     credentials: 'include',
   });
 
@@ -28,7 +26,7 @@ export async function getMyTrips() {
 }
 
 export async function deleteTrip(id: string) {
-  const res = await fetch(`${SERVER_URL}/api/trips/${id}`, {
+  const res = await fetch(`/api/trips/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -45,21 +43,21 @@ export async function deleteTrip(id: string) {
 
 export async function getAllTrips(params: Record<string, string>) {
   const query = new URLSearchParams(params).toString();
-  const res = await fetch(`${SERVER_URL}/api/trips?${query}`);
+  const res = await fetch(`/api/trips?${query}`);
 
   if (!res.ok) throw new Error('Failed to fetch trips');
   return res.json();
 }
 
 export async function getTripById(id: string) {
-  const res = await fetch(`${SERVER_URL}/api/trips/${id}`);
+  const res = await fetch(`/api/trips/${id}`);
 
   if (!res.ok) throw new Error('Failed to fetch trip');
   return res.json();
 }
 
 export async function getFeaturedTrips() {
-  const res = await fetch(`${SERVER_URL}/api/trips?sort=rating&limit=4`);
+  const res = await fetch(`/api/trips?sort=rating&limit=4`);
 
   if (!res.ok) throw new Error('Failed to fetch featured trips');
   return res.json();
@@ -67,7 +65,7 @@ export async function getFeaturedTrips() {
 
 export async function getRelatedTrips(location: string, excludeId: string) {
   const params = new URLSearchParams({ location, limit: '4' });
-  const res = await fetch(`${SERVER_URL}/api/trips?${params}`);
+  const res = await fetch(`/api/trips?${params}`);
 
   if (!res.ok) throw new Error('Failed to fetch related trips');
   const data = await res.json();
@@ -79,7 +77,7 @@ export async function sendChatMessage(
   message: string,
   conversationId?: string,
 ) {
-  const res = await fetch(`${SERVER_URL}/api/chat`, {
+  const res = await fetch(`/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -91,7 +89,7 @@ export async function sendChatMessage(
 }
 
 export async function submitRating(tripId: string, value: number) {
-  const res = await fetch(`${SERVER_URL}/api/ratings`, {
+  const res = await fetch(`/api/ratings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -109,7 +107,7 @@ export async function submitRating(tripId: string, value: number) {
 }
 
 export async function getMyRatings() {
-  const res = await fetch(`${SERVER_URL}/api/ratings/mine`, {
+  const res = await fetch(`/api/ratings/mine`, {
     credentials: 'include',
   });
 
