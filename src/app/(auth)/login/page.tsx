@@ -61,7 +61,7 @@ export default function LoginPage() {
               Welcome back. Your next journey is one login away.
             </h2>
             <p className="text-teal-100 text-sm max-w-sm">
-              Pick up where you left off — saved preferences and your trip
+              Pick up where you left off - saved preferences and your trip
               history are waiting for you.
             </p>
           </div>

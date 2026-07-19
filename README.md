@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Roamly
 
-## Getting Started
+Roamly is an AI-powered travel discovery platform where users can explore curated trip packages and destinations, get help from an AI chat assistant, rate trips, and list their own travel packages.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Roamly helps travelers discover trip packages and destinations across Bangladesh and beyond. Users can search and filter listings, view detailed trip information, rate trips they've experienced, and chat with an AI assistant for personalized trip planning help. Logged-in users can also add and manage their own trip listings.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Authentication** - Email/password login & signup, Google social login, and a demo login option
+- **Trip Explore & Search** - Search, filter (type, price range), sort, and paginate through trip listings
+- **Trip Details** - Publicly accessible pages with image galleries, overview, key info, and related trips
+- **Add & Manage Trips** - Logged-in users can create, view, and delete their own trip listings
+- **Trip Rating** - Logged-in users can rate trips and destinations (1–5 stars), with live average rating updates
+- **AI Chat Assistant** - Context-aware conversational assistant with conversation history and follow-up suggestions, powered by Gemini
+- **Responsive Design** - Fully responsive across mobile, tablet, and desktop
+- **Toast Notifications** - Real-time feedback for key actions across the app
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+**Frontend:** Next.js, TypeScript, Tailwind CSS, Recharts, Sonner, Better Auth (client)
 
-To learn more about Next.js, take a look at the following resources:
+**Backend:** Node.js, Express.js, TypeScript, MongoDB, Mongoose, Better Auth
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**AI Integration:** Google Gemini API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Links
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Live Website:** [https://roamly-t.vercel.app](https://roamly-t.vercel.app)
+- **Frontend Repository:** [https://github.com/tawchifulislam/roamly-client](https://github.com/tawchifulislam/roamly-client)
+- **Backend Repository:** [https://github.com/tawchifulislam/roamly-server](https://github.com/tawchifulislam/roamly-server)

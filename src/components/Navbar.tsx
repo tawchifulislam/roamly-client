@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, LogOut } from 'lucide-react';
 import { useSession, signOut } from '@/lib/auth-client';
 import Logo from '@/components/Logo';
@@ -23,6 +23,7 @@ const loggedInLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { data: session, isPending } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -36,16 +37,28 @@ export default function Navbar() {
     window.location.href = '/';
   };
 
+  const handleNavigate =
+    (href: string, closeMobile?: boolean) => (e: React.MouseEvent) => {
+      if (href === '/trips/rate') {
+        e.preventDefault();
+        router.push(href);
+        router.refresh();
+      }
+      if (closeMobile) setMobileOpen(false);
+    };
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
       <Container className="flex items-center justify-between h-16">
         <Logo />
 
+        {/* Desktop nav (lg and up) */}
         <div className="hidden lg:flex items-center gap-1">
           {links.map(link => (
             <Link
               key={link.href}
               href={link.href}
+              onClick={handleNavigate(link.href)}
               className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(link.href)
                   ? 'text-teal-700 bg-teal-50'
@@ -57,6 +70,7 @@ export default function Navbar() {
           ))}
         </div>
 
+        {/* Desktop auth actions */}
         <div className="hidden lg:flex items-center gap-3">
           {isPending ? (
             <div className="w-20 h-8" />
@@ -94,6 +108,7 @@ export default function Navbar() {
           )}
         </div>
 
+        {/* Mobile / tablet toggle (below lg) */}
         <button
           onClick={() => setMobileOpen(prev => !prev)}
           className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 hover:bg-gray-50"
@@ -103,6 +118,7 @@ export default function Navbar() {
         </button>
       </Container>
 
+      {/* Mobile / tablet dropdown */}
       {mobileOpen && (
         <div className="lg:hidden border-t border-gray-200 bg-white">
           <Container className="py-4 flex flex-col gap-1">
@@ -110,7 +126,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={handleNavigate(link.href, true)}
                 className={`px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                   isActive(link.href)
                     ? 'text-teal-700 bg-teal-50'

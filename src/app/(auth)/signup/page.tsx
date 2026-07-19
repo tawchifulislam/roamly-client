@@ -57,7 +57,7 @@ export default function SignupPage() {
               Discover your next journey with Roamly.
             </h2>
             <p className="text-teal-100 text-sm max-w-sm">
-              Save your favorite destinations and plan smarter — all in one
+              Save your favorite destinations and plan smarter - all in one
               place.
             </p>
           </div>
