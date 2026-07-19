@@ -19,6 +19,7 @@ export async function createTrip(data: Record<string, unknown>) {
 export async function getMyTrips() {
   const res = await fetch(`/api/trips/mine`, {
     credentials: 'include',
+    cache: 'no-store',
   });
 
   if (!res.ok) throw new Error('Failed to fetch your trips');
@@ -43,21 +44,27 @@ export async function deleteTrip(id: string) {
 
 export async function getAllTrips(params: Record<string, string>) {
   const query = new URLSearchParams(params).toString();
-  const res = await fetch(`/api/trips?${query}`);
+  const res = await fetch(`/api/trips?${query}`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) throw new Error('Failed to fetch trips');
   return res.json();
 }
 
 export async function getTripById(id: string) {
-  const res = await fetch(`/api/trips/${id}`);
+  const res = await fetch(`/api/trips/${id}`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) throw new Error('Failed to fetch trip');
   return res.json();
 }
 
 export async function getFeaturedTrips() {
-  const res = await fetch(`/api/trips?sort=rating&limit=4`);
+  const res = await fetch(`/api/trips?sort=rating&limit=4`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) throw new Error('Failed to fetch featured trips');
   return res.json();
@@ -65,7 +72,9 @@ export async function getFeaturedTrips() {
 
 export async function getRelatedTrips(location: string, excludeId: string) {
   const params = new URLSearchParams({ location, limit: '4' });
-  const res = await fetch(`/api/trips?${params}`);
+  const res = await fetch(`/api/trips?${params}`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) throw new Error('Failed to fetch related trips');
   const data = await res.json();
@@ -109,6 +118,7 @@ export async function submitRating(tripId: string, value: number) {
 export async function getMyRatings() {
   const res = await fetch(`/api/ratings/mine`, {
     credentials: 'include',
+    cache: 'no-store',
   });
 
   if (!res.ok) throw new Error('Failed to fetch your ratings');
