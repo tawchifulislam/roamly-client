@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
   Search,
@@ -17,6 +17,33 @@ import ContactBookingCard from '@/components/ContactBookingCard';
 import Container from '@/components/Container';
 
 export default function ExplorePage() {
+  return (
+    <Suspense fallback={<ExplorePageFallback />}>
+      <ExploreContent />
+    </Suspense>
+  );
+}
+
+function ExplorePageFallback() {
+  return (
+    <div className="bg-gray-50 min-h-screen">
+      <Container className="py-10 sm:py-14">
+        <div className="text-center mb-8">
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900">
+            Explore Trips
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <TripCardSkeleton key={i} />
+          ))}
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+function ExploreContent() {
   const searchParams = useSearchParams();
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,7 +112,6 @@ export default function ExplorePage() {
           </p>
         </div>
 
-        {/* Search bar */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-2 flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto mb-4">
           <div className="relative flex-1">
             <Search
@@ -115,7 +141,6 @@ export default function ExplorePage() {
           </button>
         </div>
 
-        {/* Filter panel */}
         {showFilters && (
           <div className="bg-white rounded-xl border border-gray-200 p-4 max-w-2xl mx-auto mb-8 flex flex-wrap items-end gap-3">
             <div className="flex-1 min-w-35">
@@ -199,7 +224,6 @@ export default function ExplorePage() {
           </div>
         )}
 
-        {/* Results grid */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {Array.from({ length: 8 }).map((_, i) => (
