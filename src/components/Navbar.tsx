@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, LogOut } from 'lucide-react';
+import { Menu, X, LogOut, ChevronDown, Info, Mail } from 'lucide-react';
 import { useSession, signOut } from '@/lib/auth-client';
 import Logo from '@/components/Logo';
 import Container from '@/components/Container';
@@ -21,16 +21,35 @@ const loggedInLinks = [
   { label: 'Manage Trips', href: '/trips/manage' },
 ];
 
+const moreLinks = [
+  { label: 'About', href: '/about', icon: Info },
+  { label: 'Contact', href: '/contact', icon: Mail },
+];
+
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session, isPending } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
 
   const links = session ? loggedInLinks : loggedOutLinks;
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+  const isMoreActive = moreLinks.some(link => isActive(link.href));
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = async () => {
     await signOut();
@@ -68,6 +87,44 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+
+          {/* More dropdown — About, Contact */}
+          <div className="relative" ref={moreRef}>
+            <button
+              onClick={() => setMoreOpen(prev => !prev)}
+              className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                isMoreActive || moreOpen
+                  ? 'text-teal-700 bg-teal-50'
+                  : 'text-gray-600 hover:text-teal-700 hover:bg-gray-50'
+              }`}
+            >
+              More
+              <ChevronDown
+                size={14}
+                className={`transition-transform ${moreOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            {moreOpen && (
+              <div className="absolute right-0 mt-1 w-44 bg-white rounded-xl border border-gray-200 shadow-lg py-1.5 overflow-hidden">
+                {moreLinks.map(({ label, href, icon: Icon }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setMoreOpen(false)}
+                    className={`flex items-center gap-2.5 px-3.5 py-2.5 text-sm transition-colors ${
+                      isActive(href)
+                        ? 'text-teal-700 bg-teal-50'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    <Icon size={15} />
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Desktop auth actions */}
@@ -137,7 +194,28 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <div className="border-t border-gray-100 mt-2 pt-3">
+            <div className="border-t border-gray-100 my-2 pt-2">
+              <p className="px-3 text-[11px] font-medium uppercase tracking-wide text-gray-400 mb-1">
+                More
+              </p>
+              {moreLinks.map(({ label, href, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                    isActive(href)
+                      ? 'text-teal-700 bg-teal-50'
+                      : 'text-gray-600 hover:bg-gray-50'
+                  }`}
+                >
+                  <Icon size={15} />
+                  {label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="border-t border-gray-100 mt-1 pt-3">
               {isPending ? null : session ? (
                 <div className="flex items-center justify-between px-3">
                   <div className="flex items-center gap-2.5">

@@ -12,7 +12,7 @@ const exploreLinks = [
 ];
 
 const companyLinks = [
-  { label: 'About Us', href: '/about' },
+  { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
   { label: 'Privacy Policy', href: '/privacy' },
