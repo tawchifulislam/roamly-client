@@ -33,7 +33,7 @@ export default function StarRatingInput({
           >
             <Star
               size={22}
-              className={filled ? 'text-orange-500' : 'text-gray-300'}
+              className={filled ? 'text-sand-500' : 'text-mist-200'}
               fill={filled ? 'currentColor' : 'none'}
             />
           </button>
