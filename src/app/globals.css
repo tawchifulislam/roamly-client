@@ -4,36 +4,34 @@
 
 @theme inline {
   --font-heading: var(--font-heading);
+  --font-display: var(--font-display);
   --font-body: var(--font-body);
+
+  --color-delta-900: #0a2426;
+  --color-delta-700: #0d3b3e;
+  --color-delta-500: #1f5c5e;
+  --color-delta-100: #dceae7;
+
+  --color-sand-600: #a5722e;
+  --color-sand-500: #c08a3e;
+  --color-sand-100: #f2e4cd;
+
+  --color-mist-50: #f3f5f1;
+  --color-mist-200: #e4e6df;
+
+  --color-ink-900: #14201f;
+  --color-ink-500: #5c6864;
 }
 
-h1,
-h2,
-h3,
-h4 {
+body {
+  background-color: var(--color-mist-50);
+  color: var(--color-ink-900);
+}
+
+h1, h2, h3, h4 {
   font-family: var(--font-heading);
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float 4s ease-in-out infinite;
-  animation-delay: 1.3s;
-}
-
-.animate-float-delayed-2 {
-  animation: float 4s ease-in-out infinite;
-  animation-delay: 2.6s;
+.font-display {
+  font-family: var(--font-display);
 }
