@@ -22,7 +22,7 @@ const loggedInLinks = [
 ];
 
 const moreLinks = [
-  { label: 'About', href: '/about', icon: Info },
+  { label: 'About Us', href: '/about', icon: Info },
   { label: 'Contact', href: '/contact', icon: Mail },
 ];
 
@@ -67,11 +67,10 @@ export default function Navbar() {
     };
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
+    <nav className="sticky top-0 z-50 w-full bg-mist-50/90 backdrop-blur-md border-b border-mist-200">
       <Container className="flex items-center justify-between h-16">
         <Logo />
 
-        {/* Desktop nav (lg and up) */}
         <div className="hidden lg:flex items-center gap-1">
           {links.map(link => (
             <Link
@@ -80,22 +79,21 @@ export default function Navbar() {
               onClick={handleNavigate(link.href)}
               className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isActive(link.href)
-                  ? 'text-teal-700 bg-teal-50'
-                  : 'text-gray-600 hover:text-teal-700 hover:bg-gray-50'
+                  ? 'text-delta-700 bg-delta-100'
+                  : 'text-ink-500 hover:text-delta-700 hover:bg-white'
               }`}
             >
               {link.label}
             </Link>
           ))}
 
-          {/* More dropdown — About, Contact */}
           <div className="relative" ref={moreRef}>
             <button
               onClick={() => setMoreOpen(prev => !prev)}
               className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                 isMoreActive || moreOpen
-                  ? 'text-teal-700 bg-teal-50'
-                  : 'text-gray-600 hover:text-teal-700 hover:bg-gray-50'
+                  ? 'text-delta-700 bg-delta-100'
+                  : 'text-ink-500 hover:text-delta-700 hover:bg-white'
               }`}
             >
               More
@@ -106,7 +104,7 @@ export default function Navbar() {
             </button>
 
             {moreOpen && (
-              <div className="absolute right-0 mt-1 w-44 bg-white rounded-xl border border-gray-200 shadow-lg py-1.5 overflow-hidden">
+              <div className="absolute right-0 mt-2 w-44 bg-white rounded-2xl border border-mist-200 shadow-[0_12px_32px_rgba(10,36,38,0.12)] py-1.5 overflow-hidden">
                 {moreLinks.map(({ label, href, icon: Icon }) => (
                   <Link
                     key={href}
@@ -114,8 +112,8 @@ export default function Navbar() {
                     onClick={() => setMoreOpen(false)}
                     className={`flex items-center gap-2.5 px-3.5 py-2.5 text-sm transition-colors ${
                       isActive(href)
-                        ? 'text-teal-700 bg-teal-50'
-                        : 'text-gray-600 hover:bg-gray-50'
+                        ? 'text-delta-700 bg-delta-100'
+                        : 'text-ink-500 hover:bg-mist-50'
                     }`}
                   >
                     <Icon size={15} />
@@ -127,22 +125,21 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Desktop auth actions */}
         <div className="hidden lg:flex items-center gap-3">
           {isPending ? (
-            <div className="w-20 h-8" />
+            <div className="w-24 h-9 rounded-lg bg-mist-200 animate-pulse" />
           ) : session ? (
-            <div className="flex items-center gap-3 pl-3 border-l border-gray-200">
-              <span className="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center text-xs font-semibold">
+            <div className="flex items-center gap-3 pl-3 border-l border-mist-200">
+              <span className="w-8 h-8 rounded-full bg-delta-700 text-white flex items-center justify-center text-xs font-semibold">
                 {session.user.name?.[0]?.toUpperCase() ?? 'U'}
               </span>
-              <span className="text-sm text-gray-600 max-w-25 truncate">
+              <span className="text-sm text-ink-500 max-w-25 truncate">
                 {session.user.name}
               </span>
               <button
                 onClick={handleLogout}
                 aria-label="Logout"
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-50 hover:text-red-600 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-ink-500 hover:bg-mist-100 hover:text-red-600 transition-colors"
               >
                 <LogOut size={16} />
               </button>
@@ -151,13 +148,13 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-teal-700 transition-colors"
+                className="px-3 py-2 text-sm font-medium text-ink-500 hover:text-delta-700 transition-colors"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="rounded-lg bg-teal-700 hover:bg-teal-800 px-4 py-2 text-sm font-medium text-white transition-colors"
+                className="rounded-lg bg-delta-700 hover:bg-delta-900 px-4 py-2 text-sm font-medium text-white transition-colors"
               >
                 Sign Up
               </Link>
@@ -165,19 +162,17 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile / tablet toggle (below lg) */}
         <button
           onClick={() => setMobileOpen(prev => !prev)}
-          className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 hover:bg-gray-50"
+          className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg text-ink-500 hover:bg-mist-100"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </Container>
 
-      {/* Mobile / tablet dropdown */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white">
+        <div className="lg:hidden border-t border-mist-200 bg-mist-50">
           <Container className="py-4 flex flex-col gap-1">
             {links.map(link => (
               <Link
@@ -186,16 +181,16 @@ export default function Navbar() {
                 onClick={handleNavigate(link.href, true)}
                 className={`px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                   isActive(link.href)
-                    ? 'text-teal-700 bg-teal-50'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'text-delta-700 bg-delta-100'
+                    : 'text-ink-500 hover:bg-white'
                 }`}
               >
                 {link.label}
               </Link>
             ))}
 
-            <div className="border-t border-gray-100 my-2 pt-2">
-              <p className="px-3 text-[11px] font-medium uppercase tracking-wide text-gray-400 mb-1">
+            <div className="border-t border-mist-200 my-2 pt-2">
+              <p className="px-3 text-[11px] font-medium uppercase tracking-wide text-ink-500/70 mb-1">
                 More
               </p>
               {moreLinks.map(({ label, href, icon: Icon }) => (
@@ -205,8 +200,8 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                     isActive(href)
-                      ? 'text-teal-700 bg-teal-50'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'text-delta-700 bg-delta-100'
+                      : 'text-ink-500 hover:bg-white'
                   }`}
                 >
                   <Icon size={15} />
@@ -215,14 +210,14 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div className="border-t border-gray-100 mt-1 pt-3">
+            <div className="border-t border-mist-200 mt-1 pt-3">
               {isPending ? null : session ? (
                 <div className="flex items-center justify-between px-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center text-xs font-semibold">
+                    <span className="w-8 h-8 rounded-full bg-delta-700 text-white flex items-center justify-center text-xs font-semibold">
                       {session.user.name?.[0]?.toUpperCase() ?? 'U'}
                     </span>
-                    <span className="text-sm text-gray-700">
+                    <span className="text-sm text-ink-900">
                       {session.user.name}
                     </span>
                   </div>
@@ -239,14 +234,14 @@ export default function Navbar() {
                   <Link
                     href="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="text-center py-2.5 text-sm font-medium border border-gray-300 rounded-lg text-gray-700"
+                    className="text-center py-2.5 text-sm font-medium border border-mist-200 rounded-lg text-ink-900"
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileOpen(false)}
-                    className="text-center py-2.5 text-sm font-medium rounded-lg bg-teal-700 text-white"
+                    className="text-center py-2.5 text-sm font-medium rounded-lg bg-delta-700 text-white"
                   >
                     Sign Up
                   </Link>
