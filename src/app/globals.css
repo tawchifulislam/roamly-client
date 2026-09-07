@@ -17,6 +17,7 @@
   --color-sand-100: #f2e4cd;
 
   --color-mist-50: #f3f5f1;
+  --color-mist-100: #ebeee6;
   --color-mist-200: #e4e6df;
 
   --color-ink-900: #14201f;
@@ -28,7 +29,10 @@ body {
   color: var(--color-ink-900);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-heading);
 }
 
